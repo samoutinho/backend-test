@@ -13,12 +13,14 @@ import { OrderService } from '../../application/services/order.service';
 import { CreateOrderDto } from '../../application/dto/create-order.dto';
 import { UpdateOrderStatusDto } from '../../application/dto/update-order-status.dto';
 import { Order } from '../../domain/entities/order.entity';
+import { Public } from '../../infrastructure/decorators/public.decorator';
 
 @ApiTags('Orders')
 @Controller('orders')
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
+  @Public()
   @Get()
   @ApiOperation({ summary: 'List all orders' })
   @ApiResponse({ status: 200, description: 'List of orders', type: [Order] })
@@ -26,6 +28,7 @@ export class OrderController {
     return this.orderService.findAll();
   }
 
+  @Public()
   @Get(':id')
   @ApiOperation({ summary: 'Get an order by ID' })
   @ApiResponse({ status: 200, description: 'Order found', type: Order })

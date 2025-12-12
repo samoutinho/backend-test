@@ -14,12 +14,14 @@ import { ProductService } from '../../application/services/product.service';
 import { CreateProductDto } from '../../application/dto/create-product.dto';
 import { UpdateProductDto } from '../../application/dto/update-product.dto';
 import { Product } from '../../domain/entities/product.entity';
+import { Public } from '../../infrastructure/decorators/public.decorator';
 
 @ApiTags('Products')
 @Controller('products')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
+  @Public()
   @Get()
   @ApiOperation({ summary: 'List all products' })
   @ApiResponse({ status: 200, description: 'List of products', type: [Product] })
@@ -27,6 +29,7 @@ export class ProductController {
     return this.productService.findAll();
   }
 
+  @Public()
   @Get(':id')
   @ApiOperation({ summary: 'Get a product by ID' })
   @ApiResponse({ status: 200, description: 'Product found', type: Product })
