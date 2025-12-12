@@ -7,7 +7,7 @@ export class AddImageColumnToProducts1700000000003 implements MigrationInterface
       new TableColumn({
         name: 'imagem',
         type: 'varchar',
-        length: 500,
+        length: '500' as any,
         isNullable: true,
       }),
     );
