@@ -160,11 +160,23 @@ A API utiliza JWT para autenticação. Para acessar os endpoints protegidos:
 
 ### Produtos
 
-- `GET /products` - Lista todos os produtos
+- `GET /products?page=1&limit=10` - Lista produtos com paginação (query params opcionais)
 - `GET /products/:id` - Busca um produto por ID
-- `POST /products` - Cria um novo produto
+- `POST /products` - Cria um novo produto (aceita campo `imagem` opcional com URL)
 - `PUT /products/:id` - Atualiza um produto
 - `DELETE /products/:id` - Remove um produto
+
+**Exemplo de criação de produto com imagem:**
+```json
+{
+  "nome": "Notebook Gamer",
+  "categoria": "Eletrônicos",
+  "preco": 4500.00,
+  "descricao": "Notebook gamer com placa de vídeo dedicada",
+  "imagem": "https://images.unsplash.com/photo-1496181133206-80ce9b88a853",
+  "quantidade_estoque": 10
+}
+```
 
 ### Pedidos
 
@@ -268,6 +280,7 @@ curl -X POST http://localhost:3001/orders \
 ## 🎯 Funcionalidades Implementadas
 
 ✅ CRUD completo de produtos
+✅ Suporte a imagens de produtos (campo imagem com URL)
 ✅ Criação e listagem de pedidos
 ✅ Validação de estoque ao criar pedidos
 ✅ Atualização automática de estoque ao concluir pedidos
@@ -275,7 +288,8 @@ curl -X POST http://localhost:3001/orders \
 ✅ Validação de dados com class-validator
 ✅ Documentação Swagger (http://localhost:3001/api)
 ✅ Autenticação JWT com login e registro
-✅ Migrations do banco de dados (3 migrations: products, orders, users)
+✅ Migrations do banco de dados (4 migrations: products, orders, users, add_image_column)
+✅ Paginação de produtos (page e limit como query parameters)
 ✅ Seeders para dados iniciais (produtos e usuários)
 ✅ Testes unitários (16 testes passando)
 ✅ Docker e Docker Compose
