@@ -51,8 +51,10 @@ API RESTful para gerenciamento de produtos e pedidos desenvolvida com NestJS, se
    - Configurar automaticamente o banco de dados
 
 4. **Acesse a aplicação**:
-   - API: http://localhost:3000
-   - Swagger: http://localhost:3000/api
+   - API: http://localhost:3001
+   - Swagger: http://localhost:3001/api
+   
+   **Nota**: A aplicação está configurada para rodar na porta 3001 para evitar conflitos com outras aplicações.
 
 ### Opção 2: Instalação Local (Sem Docker)
 
@@ -72,11 +74,13 @@ API RESTful para gerenciamento de produtos e pedidos desenvolvida com NestJS, se
    DATABASE_USER=postgres
    DATABASE_PASSWORD=sua_senha
    DATABASE_NAME=thera_consulting_db
-   PORT=3000
+   PORT=3001
    NODE_ENV=development
    JWT_SECRET=your-secret-key-change-in-production
    JWT_EXPIRES_IN=24h
    ```
+   
+   **Nota**: A aplicação está configurada para rodar na porta 3001 para evitar conflitos com outras aplicações.
 
 4. **Execute as migrações**:
    ```bash
@@ -103,8 +107,10 @@ API RESTful para gerenciamento de produtos e pedidos desenvolvida com NestJS, se
 
    # Produção
    npm run build
-   npm run start:prod
+   PORT=3001 npm run start:prod
    ```
+
+   **Nota**: A aplicação roda na porta 3001 por padrão. Para usar outra porta, defina a variável `PORT` no `.env`.
 
 ## 🧪 Executando os Testes
 
@@ -132,7 +138,7 @@ npm run test:e2e
 
 A documentação completa da API está disponível via Swagger quando a aplicação estiver rodando:
 
-- **URL do Swagger**: http://localhost:3000/api
+- **URL do Swagger**: http://localhost:3001/api
 
 A documentação inclui:
 - Todos os endpoints disponíveis
@@ -145,9 +151,9 @@ A documentação inclui:
 
 A API utiliza JWT para autenticação. Para acessar os endpoints protegidos:
 
-1. Faça login em `/auth/login` ou registre-se em `/auth/register`
+1. Faça login em `http://localhost:3001/auth/login` ou registre-se em `http://localhost:3001/auth/register`
 2. Copie o `access_token` retornado
-3. No Swagger, clique em "Authorize" e cole o token no formato: `Bearer {token}`
+3. No Swagger (http://localhost:3001/api), clique em "Authorize" e cole o token no formato: `Bearer {token}`
 4. Ou inclua no header: `Authorization: Bearer {token}`
 
 ## 🔌 Endpoints Principais
@@ -234,7 +240,7 @@ docker-compose up -d --build
 
 ### Criar um produto:
 ```bash
-curl -X POST http://localhost:3000/products \
+curl -X POST http://localhost:3001/products \
   -H "Content-Type: application/json" \
   -d '{
     "nome": "Notebook Dell",
@@ -247,7 +253,7 @@ curl -X POST http://localhost:3000/products \
 
 ### Criar um pedido:
 ```bash
-curl -X POST http://localhost:3000/orders \
+curl -X POST http://localhost:3001/orders \
   -H "Content-Type: application/json" \
   -d '{
     "produtos": [
@@ -267,7 +273,7 @@ curl -X POST http://localhost:3000/orders \
 ✅ Atualização automática de estoque ao concluir pedidos
 ✅ Middleware de logging de requisições
 ✅ Validação de dados com class-validator
-✅ Documentação Swagger (http://localhost:3000/api)
+✅ Documentação Swagger (http://localhost:3001/api)
 ✅ Autenticação JWT com login e registro
 ✅ Migrations do banco de dados (3 migrations: products, orders, users)
 ✅ Seeders para dados iniciais (produtos e usuários)

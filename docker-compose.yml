@@ -24,13 +24,14 @@ services:
       dockerfile: Dockerfile
     container_name: thera-consulting-backend
     ports:
-      - "3000:3000"
+      - "3001:3000"
     environment:
       - DATABASE_HOST=postgres
       - DATABASE_PORT=5432
       - DATABASE_USER=postgres
       - DATABASE_PASSWORD=postgres
       - DATABASE_NAME=thera_consulting_db
+      - PORT=3000
       - JWT_SECRET=your-secret-key-change-in-production
     depends_on:
       postgres:
