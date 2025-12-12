@@ -1,0 +1,257 @@
+# Thera Consulting - Backend Test
+
+API RESTful para gerenciamento de produtos e pedidos desenvolvida com NestJS, seguindo Clean Architecture e princípios SOLID.
+
+## 🚀 Tecnologias
+
+- **NestJS** - Framework Node.js
+- **TypeScript** - Linguagem de programação
+- **PostgreSQL** - Banco de dados relacional
+- **TypeORM** - ORM para TypeScript
+- **Swagger** - Documentação da API
+- **Docker** - Containerização
+- **Jest** - Framework de testes
+
+## 📋 Pré-requisitos
+
+- Node.js 20+ instalado
+- Docker e Docker Compose instalados
+- npm ou yarn
+
+## 🛠️ Instalação e Configuração
+
+### Opção 1: Usando Docker (Recomendado)
+
+1. **Clone o repositório** (ou navegue até o diretório do projeto):
+   ```bash
+   cd backend-test
+   ```
+
+2. **Crie um arquivo `.env`** na raiz do projeto (copie de `.env.example` se existir):
+   ```env
+   DATABASE_HOST=postgres
+   DATABASE_PORT=5432
+   DATABASE_USER=postgres
+   DATABASE_PASSWORD=postgres
+   DATABASE_NAME=thera_consulting_db
+   PORT=3000
+   NODE_ENV=development
+   JWT_SECRET=your-secret-key-change-in-production
+   JWT_EXPIRES_IN=24h
+   ```
+
+3. **Suba os containers**:
+   ```bash
+   docker-compose up -d
+   ```
+
+   Isso irá:
+   - Criar e iniciar o container do PostgreSQL
+   - Criar e iniciar o container da aplicação NestJS
+   - Configurar automaticamente o banco de dados
+
+4. **Acesse a aplicação**:
+   - API: http://localhost:3000
+   - Swagger: http://localhost:3000/api
+
+### Opção 2: Instalação Local (Sem Docker)
+
+1. **Instale as dependências**:
+   ```bash
+   npm install
+   ```
+
+2. **Configure o PostgreSQL**:
+   - Certifique-se de que o PostgreSQL está rodando
+   - Crie um banco de dados chamado `thera_consulting_db`
+
+3. **Crie um arquivo `.env`** na raiz do projeto:
+   ```env
+   DATABASE_HOST=localhost
+   DATABASE_PORT=5432
+   DATABASE_USER=postgres
+   DATABASE_PASSWORD=sua_senha
+   DATABASE_NAME=thera_consulting_db
+   PORT=3000
+   NODE_ENV=development
+   JWT_SECRET=your-secret-key-change-in-production
+   JWT_EXPIRES_IN=24h
+   ```
+
+4. **Execute as migrações** (se necessário):
+   ```bash
+   npm run typeorm migration:run
+   ```
+   
+   **Nota**: Em modo desenvolvimento, o TypeORM sincroniza automaticamente o schema.
+
+5. **Inicie a aplicação**:
+   ```bash
+   # Desenvolvimento
+   npm run start:dev
+
+   # Produção
+   npm run build
+   npm run start:prod
+   ```
+
+## 🧪 Executando os Testes
+
+### Executar todos os testes:
+```bash
+npm test
+```
+
+### Executar testes em modo watch:
+```bash
+npm run test:watch
+```
+
+### Executar testes com cobertura:
+```bash
+npm run test:cov
+```
+
+### Executar testes E2E:
+```bash
+npm run test:e2e
+```
+
+## 📚 Documentação da API
+
+A documentação completa da API está disponível via Swagger quando a aplicação estiver rodando:
+
+- **URL**: http://localhost:3000/api
+
+A documentação inclui:
+- Todos os endpoints disponíveis
+- Parâmetros de entrada
+- Exemplos de requisições e respostas
+- Possibilidade de testar os endpoints diretamente
+
+## 🔌 Endpoints Principais
+
+### Produtos
+
+- `GET /products` - Lista todos os produtos
+- `GET /products/:id` - Busca um produto por ID
+- `POST /products` - Cria um novo produto
+- `PUT /products/:id` - Atualiza um produto
+- `DELETE /products/:id` - Remove um produto
+
+### Pedidos
+
+- `GET /orders` - Lista todos os pedidos
+- `GET /orders/:id` - Busca um pedido por ID
+- `POST /orders` - Cria um novo pedido
+- `PUT /orders/:id/status` - Atualiza o status de um pedido
+
+## 🏗️ Arquitetura
+
+O projeto segue **Clean Architecture** com as seguintes camadas:
+
+```
+src/
+├── domain/              # Entidades e interfaces (regras de negócio)
+│   ├── entities/        # Entidades do domínio
+│   └── interfaces/      # Contratos dos repositórios
+├── application/         # Casos de uso e DTOs
+│   ├── services/        # Lógica de negócio
+│   ├── dto/            # Data Transfer Objects
+│   └── modules/        # Módulos NestJS
+├── infrastructure/      # Implementações técnicas
+│   ├── repositories/   # Implementação dos repositórios
+│   ├── database/       # Configuração do banco
+│   └── middleware/     # Middlewares
+└── presentation/        # Controllers e rotas
+    └── controllers/    # Controllers REST
+```
+
+## 🔧 Scripts Disponíveis
+
+- `npm run start` - Inicia a aplicação em modo produção
+- `npm run start:dev` - Inicia em modo desenvolvimento com hot-reload
+- `npm run start:debug` - Inicia em modo debug
+- `npm run build` - Compila o projeto TypeScript
+- `npm run test` - Executa testes unitários
+- `npm run test:watch` - Executa testes em modo watch
+- `npm run test:cov` - Executa testes com cobertura
+- `npm run test:e2e` - Executa testes end-to-end
+- `npm run lint` - Executa o linter
+
+## 🐳 Comandos Docker Úteis
+
+```bash
+# Subir containers
+docker-compose up -d
+
+# Ver logs
+docker-compose logs -f
+
+# Parar containers
+docker-compose down
+
+# Parar e remover volumes (limpar banco)
+docker-compose down -v
+
+# Rebuild dos containers
+docker-compose up -d --build
+```
+
+## 📝 Exemplo de Uso
+
+### Criar um produto:
+```bash
+curl -X POST http://localhost:3000/products \
+  -H "Content-Type: application/json" \
+  -d '{
+    "nome": "Notebook Dell",
+    "categoria": "Eletrônicos",
+    "descricao": "Notebook Dell Inspiron 15",
+    "preco": 2999.99,
+    "quantidade_estoque": 10
+  }'
+```
+
+### Criar um pedido:
+```bash
+curl -X POST http://localhost:3000/orders \
+  -H "Content-Type: application/json" \
+  -d '{
+    "produtos": [
+      {
+        "product_id": "123e4567-e89b-12d3-a456-426614174000",
+        "quantity": 2
+      }
+    ]
+  }'
+```
+
+## 🎯 Funcionalidades Implementadas
+
+✅ CRUD completo de produtos
+✅ Criação e listagem de pedidos
+✅ Validação de estoque ao criar pedidos
+✅ Atualização automática de estoque ao concluir pedidos
+✅ Middleware de logging de requisições
+✅ Validação de dados com class-validator
+✅ Documentação Swagger
+✅ Testes unitários
+✅ Docker e Docker Compose
+✅ Clean Architecture
+✅ Princípios SOLID
+
+## 🔒 Segurança
+
+- Validação de entrada em todos os endpoints
+- Tratamento de erros global
+- CORS configurado
+- JWT preparado para autenticação (extra implementado)
+
+## 📄 Licença
+
+Este projeto é público e está disponível para fins de avaliação técnica.
+
+## 👤 Autor
+
+Desenvolvido como parte do teste técnico para Thera Consulting.
