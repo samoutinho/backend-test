@@ -267,8 +267,11 @@ curl -X POST http://localhost:3000/orders \
 ✅ Atualização automática de estoque ao concluir pedidos
 ✅ Middleware de logging de requisições
 ✅ Validação de dados com class-validator
-✅ Documentação Swagger
-✅ Testes unitários
+✅ Documentação Swagger (http://localhost:3000/api)
+✅ Autenticação JWT com login e registro
+✅ Migrations do banco de dados (3 migrations: products, orders, users)
+✅ Seeders para dados iniciais (produtos e usuários)
+✅ Testes unitários (16 testes passando)
 ✅ Docker e Docker Compose
 ✅ Clean Architecture
 ✅ Princípios SOLID
