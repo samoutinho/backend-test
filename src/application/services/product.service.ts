@@ -4,7 +4,7 @@ import {
   BadRequestException,
   Inject,
 } from '@nestjs/common';
-import { IProductRepository } from '../../domain/interfaces/product.repository.interface';
+import type { IProductRepository } from '../../domain/interfaces/product.repository.interface';
 import { Product } from '../../domain/entities/product.entity';
 import { CreateProductDto } from '../dto/create-product.dto';
 import { UpdateProductDto } from '../dto/update-product.dto';

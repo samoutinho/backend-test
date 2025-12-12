@@ -4,8 +4,8 @@ import {
   BadRequestException,
   Inject,
 } from '@nestjs/common';
-import { IOrderRepository } from '../../domain/interfaces/order.repository.interface';
-import { IProductRepository } from '../../domain/interfaces/product.repository.interface';
+import type { IOrderRepository } from '../../domain/interfaces/order.repository.interface';
+import type { IProductRepository } from '../../domain/interfaces/product.repository.interface';
 import {
   Order,
   OrderStatus,
