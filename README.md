@@ -207,6 +207,9 @@ src/
 - `npm run migration:run` - Executa as migrations do banco de dados
 - `npm run migration:revert` - Reverte a última migration
 - `npm run seed:run` - Executa os seeders para popular o banco
+- `npm run migration:run` - Executa as migrations do banco de dados
+- `npm run migration:revert` - Reverte a última migration
+- `npm run seed:run` - Executa os seeders para popular o banco
 
 ## 🐳 Comandos Docker Úteis
 
