@@ -37,7 +37,7 @@ export class CreateProductsTable1700000000000 implements MigrationInterface {
         {
           name: 'imagem',
           type: 'varchar',
-          length: 500,
+          length: '500',
           isNullable: true,
         },
         {
