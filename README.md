@@ -303,6 +303,156 @@ curl -X POST http://localhost:3001/orders \
 - CORS configurado
 - JWT preparado para autenticação (extra implementado)
 
+## 🚧 Implementações Futuras
+
+### Arquitetura e Infraestrutura
+- **Multitenancy**: Suporte a múltiplos tenants com isolamento completo de dados
+  - Tabela `tenants` com configurações por tenant
+  - Middleware de tenant resolution
+  - Isolamento de dados por tenant_id
+- **Cache Distribuído**: Implementação de Redis para cache de queries frequentes
+- **Rate Limiting**: Proteção contra abuso com diferentes estratégias por endpoint
+- **Queue System**: Sistema de filas para processamento assíncrono (Bull/BullMQ)
+- **Event Sourcing**: Rastreamento completo de eventos do sistema
+
+### Segurança e Autenticação
+- **Reset de Senha**: 
+  - Endpoint para solicitar reset via email
+  - Tokens temporários com expiração
+  - Integração com serviço de email (SendGrid, AWS SES)
+- **Autenticação Multi-fator (MFA)**: 
+  - Suporte a TOTP (Google Authenticator)
+  - Backup codes para recuperação
+- **Gestão de Permissões (RBAC)**: 
+  - Tabela de roles e permissions
+  - Middleware de autorização granular
+  - Permissões por recurso e ação
+- **OAuth2/SSO**: 
+  - Integração com Google, GitHub, Microsoft
+  - Suporte a SAML
+- **Auditoria**: 
+  - Tabela de audit_logs
+  - Rastreamento de todas as ações críticas
+  - Logs imutáveis
+
+### Melhorias de Dados
+- **Categorias como Entidade**: 
+  - Criar tabela `categories` com relacionamento many-to-many
+  - Migration para migrar dados existentes
+  - Endpoints CRUD para categorias
+  - Validação de categoria obrigatória
+- **Tags e Etiquetas**: 
+  - Tabela `tags` e `product_tags` (many-to-many)
+  - Busca por tags
+  - Sugestões de tags
+- **Histórico de Alterações**: 
+  - Tabela `product_history` para versionamento
+  - Trigger ou hooks para capturar mudanças
+  - API para visualizar histórico
+- **Soft Delete**: 
+  - Campo `deleted_at` em todas as tabelas principais
+  - Queries automáticas excluindo deletados
+  - Endpoint para restaurar registros
+
+### Funcionalidades de Negócio
+- **Carrinho de Compras**: 
+  - Tabela `carts` e `cart_items`
+  - Endpoints para gerenciar carrinho
+  - Expiração automática de carrinhos abandonados
+- **Sistema de Avaliações**: 
+  - Tabela `reviews` com ratings
+  - Média de avaliações por produto
+  - Filtros por rating
+- **Notificações**: 
+  - Tabela `notifications`
+  - WebSockets para notificações em tempo real
+  - Templates de notificações
+- **Relatórios e Analytics**: 
+  - Endpoints de métricas e estatísticas
+  - Agregações complexas
+  - Exportação de relatórios
+- **Exportação de Dados**: 
+  - Endpoints para exportar em CSV, Excel, PDF
+  - Jobs assíncronos para grandes volumes
+- **Importação em Lote**: 
+  - Endpoint para upload de arquivo CSV/Excel
+  - Validação e processamento em lote
+  - Relatório de erros de importação
+
+### Upload e Armazenamento
+- **Upload de Imagens**: 
+  - Integração com AWS S3, Google Cloud Storage ou local
+  - Redimensionamento automático de imagens
+  - Suporte a múltiplas imagens por produto
+  - CDN para distribuição de imagens
+
+### Performance e Otimização
+- **Índices de Banco**: 
+  - Análise e otimização de queries
+  - Índices compostos para buscas frequentes
+- **Query Optimization**: 
+  - Uso de select específicos
+  - Eager loading otimizado
+  - Paginação eficiente
+- **Connection Pooling**: 
+  - Configuração otimizada de pool de conexões
+- **Database Replication**: 
+  - Leitura de réplicas para queries de leitura
+
+### Testes e Qualidade
+- **Testes E2E**: 
+  - Testes completos de fluxos de negócio
+  - Testes de integração entre módulos
+- **Testes de Performance**: 
+  - Testes de carga (k6, Artillery)
+  - Análise de gargalos
+- **Testes de Segurança**: 
+  - Análise de vulnerabilidades (OWASP)
+  - Testes de penetração
+- **Cobertura de Testes**: 
+  - Aumentar cobertura para >80%
+  - Testes de unidade para todos os serviços
+
+### Documentação e API
+- **Documentação de API Melhorada**: 
+  - Exemplos mais detalhados no Swagger
+  - Documentação de erros possíveis
+  - Guias de integração
+- **API GraphQL**: 
+  - Adicionar endpoint GraphQL
+  - Schema GraphQL completo
+  - Resolvers otimizados
+- **Versionamento de API**: 
+  - Suporte a múltiplas versões (v1, v2)
+  - Deprecação gradual de endpoints
+
+### Integrações
+- **Webhooks**: 
+  - Sistema de webhooks configuráveis
+  - Retry automático em caso de falha
+  - Assinatura de eventos
+- **Integração com Pagamentos**: 
+  - Gateways de pagamento (Stripe, PagSeguro)
+  - Processamento de pagamentos
+- **Integração com Email**: 
+  - Serviço de email transacional
+  - Templates de email
+- **Integração com ERP**: 
+  - Conectores para sistemas ERP
+  - Sincronização de dados
+
+### Monitoramento e Observabilidade
+- **Logs Estruturados**: 
+  - Integração com ELK Stack ou similar
+  - Logs em formato JSON
+  - Níveis de log configuráveis
+- **Métricas**: 
+  - Integração com Prometheus
+  - Dashboards no Grafana
+- **Tracing**: 
+  - Distributed tracing (Jaeger, Zipkin)
+  - Rastreamento de requisições
+
 ## 📄 Licença
 
 Este projeto é público e está disponível para fins de avaliação técnica.
