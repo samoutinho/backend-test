@@ -78,14 +78,25 @@ API RESTful para gerenciamento de produtos e pedidos desenvolvida com NestJS, se
    JWT_EXPIRES_IN=24h
    ```
 
-4. **Execute as migrações** (se necessário):
+4. **Execute as migrações**:
    ```bash
-   npm run typeorm migration:run
+   npm run migration:run
    ```
    
-   **Nota**: Em modo desenvolvimento, o TypeORM sincroniza automaticamente o schema.
+   Isso criará as tabelas: `products`, `orders` e `users`.
 
-5. **Inicie a aplicação**:
+5. **Execute os seeders** (opcional, para dados iniciais):
+   ```bash
+   npm run seed:run
+   ```
+   
+   Isso criará usuários de teste e produtos de exemplo.
+   
+   **Usuários padrão criados:**
+   - Email: `admin@thera.com` / Senha: `admin123`
+   - Email: `test@thera.com` / Senha: `test123`
+
+6. **Inicie a aplicação**:
    ```bash
    # Desenvolvimento
    npm run start:dev
@@ -121,13 +132,23 @@ npm run test:e2e
 
 A documentação completa da API está disponível via Swagger quando a aplicação estiver rodando:
 
-- **URL**: http://localhost:3000/api
+- **URL do Swagger**: http://localhost:3000/api
 
 A documentação inclui:
 - Todos os endpoints disponíveis
 - Parâmetros de entrada
 - Exemplos de requisições e respostas
 - Possibilidade de testar os endpoints diretamente
+- Autenticação JWT (use o botão "Authorize" no Swagger)
+
+### Autenticação
+
+A API utiliza JWT para autenticação. Para acessar os endpoints protegidos:
+
+1. Faça login em `/auth/login` ou registre-se em `/auth/register`
+2. Copie o `access_token` retornado
+3. No Swagger, clique em "Authorize" e cole o token no formato: `Bearer {token}`
+4. Ou inclua no header: `Authorization: Bearer {token}`
 
 ## 🔌 Endpoints Principais
 
@@ -141,10 +162,15 @@ A documentação inclui:
 
 ### Pedidos
 
-- `GET /orders` - Lista todos os pedidos
-- `GET /orders/:id` - Busca um pedido por ID
-- `POST /orders` - Cria um novo pedido
-- `PUT /orders/:id/status` - Atualiza o status de um pedido
+- `GET /orders` - Lista todos os pedidos (requer autenticação)
+- `GET /orders/:id` - Busca um pedido por ID (requer autenticação)
+- `POST /orders` - Cria um novo pedido (requer autenticação)
+- `PUT /orders/:id/status` - Atualiza o status de um pedido (requer autenticação)
+
+### Autenticação
+
+- `POST /auth/register` - Registra um novo usuário (público)
+- `POST /auth/login` - Faz login e retorna token JWT (público)
 
 ## 🏗️ Arquitetura
 
@@ -178,6 +204,9 @@ src/
 - `npm run test:cov` - Executa testes com cobertura
 - `npm run test:e2e` - Executa testes end-to-end
 - `npm run lint` - Executa o linter
+- `npm run migration:run` - Executa as migrations do banco de dados
+- `npm run migration:revert` - Reverte a última migration
+- `npm run seed:run` - Executa os seeders para popular o banco
 
 ## 🐳 Comandos Docker Úteis
 
