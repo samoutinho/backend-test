@@ -35,6 +35,15 @@ export class CreateProductDto {
   @Min(0)
   preco: number;
 
+  @ApiPropertyOptional({
+    description: 'URL da imagem do produto',
+    example: 'https://example.com/image.jpg',
+  })
+  @IsString()
+  @IsUrl()
+  @IsOptional()
+  imagem?: string;
+
   @ApiProperty({
     description: 'Quantidade em estoque',
     example: 10,

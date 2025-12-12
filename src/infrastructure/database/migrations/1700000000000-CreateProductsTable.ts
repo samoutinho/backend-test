@@ -28,17 +28,23 @@ export class CreateProductsTable1700000000000 implements MigrationInterface {
             type: 'text',
             isNullable: true,
           },
-          {
-            name: 'preco',
-            type: 'decimal',
-            precision: 10,
-            scale: 2,
-          },
-          {
-            name: 'quantidade_estoque',
-            type: 'int',
-            default: 0,
-          },
+        {
+          name: 'preco',
+          type: 'decimal',
+          precision: 10,
+          scale: 2,
+        },
+        {
+          name: 'imagem',
+          type: 'varchar',
+          length: 500,
+          isNullable: true,
+        },
+        {
+          name: 'quantidade_estoque',
+          type: 'int',
+          default: 0,
+        },
           {
             name: 'created_at',
             type: 'timestamp',

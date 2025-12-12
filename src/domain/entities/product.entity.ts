@@ -23,6 +23,9 @@ export class Product {
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   preco: number;
 
+  @Column({ type: 'varchar', length: 500, nullable: true })
+  imagem: string;
+
   @Column({ type: 'int', default: 0 })
   quantidade_estoque: number;
 
