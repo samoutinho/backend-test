@@ -8,6 +8,7 @@ import type { IProductRepository } from '../../domain/interfaces/product.reposit
 import { Product } from '../../domain/entities/product.entity';
 import { CreateProductDto } from '../dto/create-product.dto';
 import { UpdateProductDto } from '../dto/update-product.dto';
+import { PaginatedResult } from '../dto/pagination.dto';
 
 @Injectable()
 export class ProductService {
@@ -18,6 +19,10 @@ export class ProductService {
 
   async findAll(): Promise<Product[]> {
     return this.productRepository.findAll();
+  }
+
+  async findAllPaginated(page: number, limit: number): Promise<PaginatedResult<Product>> {
+    return this.productRepository.findAllPaginated(page, limit);
   }
 
   async findById(id: string): Promise<Product> {

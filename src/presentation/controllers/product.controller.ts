@@ -6,6 +6,7 @@ import {
   Delete,
   Body,
   Param,
+  Query,
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
@@ -13,6 +14,7 @@ import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { ProductService } from '../../application/services/product.service';
 import { CreateProductDto } from '../../application/dto/create-product.dto';
 import { UpdateProductDto } from '../../application/dto/update-product.dto';
+import { PaginationDto, PaginatedResult } from '../../application/dto/pagination.dto';
 import { Product } from '../../domain/entities/product.entity';
 import { Public } from '../../infrastructure/decorators/public.decorator';
 
@@ -23,10 +25,12 @@ export class ProductController {
 
   @Public()
   @Get()
-  @ApiOperation({ summary: 'List all products' })
-  @ApiResponse({ status: 200, description: 'List of products', type: [Product] })
-  async findAll(): Promise<Product[]> {
-    return this.productService.findAll();
+  @ApiOperation({ summary: 'List all products (paginated)' })
+  @ApiResponse({ status: 200, description: 'Paginated list of products' })
+  async findAll(@Query() paginationDto: PaginationDto): Promise<PaginatedResult<Product>> {
+    const page = paginationDto.page || 1;
+    const limit = paginationDto.limit || 10;
+    return this.productService.findAllPaginated(page, limit);
   }
 
   @Public()
