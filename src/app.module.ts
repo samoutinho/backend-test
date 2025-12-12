@@ -5,9 +5,13 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductModule } from './application/modules/product.module';
 import { OrderModule } from './application/modules/order.module';
+import { AuthModule } from './application/modules/auth.module';
 import { LoggerMiddleware } from './infrastructure/middleware/logger.middleware';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './infrastructure/guards/jwt-auth.guard';
 import { Product } from './domain/entities/product.entity';
 import { Order } from './domain/entities/order.entity';
+import { User } from './domain/entities/user.entity';
 
 @Module({
   imports: [
@@ -24,7 +28,7 @@ import { Order } from './domain/entities/order.entity';
         username: configService.get('DATABASE_USER', 'postgres'),
         password: configService.get('DATABASE_PASSWORD', 'postgres'),
         database: configService.get('DATABASE_NAME', 'thera_consulting_db'),
-        entities: [Product, Order],
+        entities: [Product, Order, User],
         synchronize: configService.get('NODE_ENV') === 'development',
         logging: configService.get('NODE_ENV') === 'development',
       }),
@@ -32,9 +36,16 @@ import { Order } from './domain/entities/order.entity';
     }),
     ProductModule,
     OrderModule,
+    AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
